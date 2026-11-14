@@ -1,0 +1,25 @@
+{# Shared layout: every page extends this file and fills in the blocks. #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  {# Each page can set its own browser tab title. #}
+  <title>{% block title %}Todo App{% endblock %}</title>
+  <style>
+    body { font-family: sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    nav a { margin-right: 1rem; }
+    .done { text-decoration: line-through; color: #777; }  /* completed tasks */
+    .errorlist { color: #b00020; }  /* Django's class for form errors */
+  </style>
+</head>
+<body>
+  {# Navigation shown on every page. {% url %} builds links from URL names. #}
+  <nav>
+    <a href="{% url 'tasks:task_list' %}">All tasks</a>
+    <a href="{% url 'tasks:task_create' %}">New task</a>
+  </nav>
+  <hr>
+  {# Each page's main content goes here. #}
+  {% block content %}{% endblock %}
+</body>
+</html>

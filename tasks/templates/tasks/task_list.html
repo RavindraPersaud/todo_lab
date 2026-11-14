@@ -1,0 +1,21 @@
+{% extends "tasks/base.html" %}
+{# Task list page: shows every task with its status and action links. #}
+{% block title %}All tasks{% endblock %}
+{% block content %}
+<h1>All tasks</h1>
+<ul>
+  {% for task in tasks %}
+    <li>
+      {# Title links to the detail page; completed tasks get the "done" style. #}
+      <a href="{% url 'tasks:task_detail' task.pk %}"{% if task.completed %} class="done"{% endif %}>{{ task.title }}</a>
+      {# yesno turns True/False into readable text. #}
+      ({{ task.completed|yesno:"Done,Not done" }})
+      <a href="{% url 'tasks:task_update' task.pk %}">Edit</a>
+      <a href="{% url 'tasks:task_delete' task.pk %}">Delete</a>
+    </li>
+  {% empty %}
+    {# Shown only when there are no tasks. #}
+    <li>No tasks yet. <a href="{% url 'tasks:task_create' %}">Add your first task</a>.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

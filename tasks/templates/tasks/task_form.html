@@ -1,0 +1,20 @@
+{% extends "tasks/base.html" %}
+{# One form template used for both creating and editing a task. #}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+<h1>{{ page_title }}</h1>
+{# POST because this form changes data. novalidate turns off browser checks so server validation can be seen. #}
+<form method="post" novalidate>
+  {# Required on every internal POST form; Django rejects the request without it (403). #}
+  {% csrf_token %}
+  {# Renders each field with its label, errors and any value already entered. #}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+  {# "task" only exists when editing: cancel back to that task, otherwise back to the list. #}
+  {% if task %}
+    <a href="{% url 'tasks:task_detail' task.pk %}">Cancel</a>
+  {% else %}
+    <a href="{% url 'tasks:task_list' %}">Cancel</a>
+  {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "tasks/base.html" %}
+{# Detail page: shows one task's full information. #}
+{% block title %}{{ task.title }}{% endblock %}
+{% block content %}
+<h1>{{ task.title }}</h1>
+<p><strong>Status:</strong> {{ task.completed|yesno:"Completed,Not completed" }}</p>
+{# date formats the timestamp, e.g. 11 Nov 2026, 1:22 PM #}
+<p><strong>Created:</strong> {{ task.created_at|date:"d M Y, g:i A" }}</p>
+{# default covers an empty description; linebreaksbr keeps the user's line breaks. #}
+<p><strong>Description:</strong><br>{{ task.description|default:"No description."|linebreaksbr }}</p>
+<p>
+  <a href="{% url 'tasks:task_update' task.pk %}">Edit</a> |
+  <a href="{% url 'tasks:task_delete' task.pk %}">Delete</a> |
+  <a href="{% url 'tasks:task_list' %}">Back to list</a>
+</p>
+{% endblock %}

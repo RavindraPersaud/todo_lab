@@ -1,0 +1,15 @@
+{% extends "tasks/base.html" %}
+{# Delete confirmation: reached by GET, which only displays this page. #}
+{% block title %}Delete task{% endblock %}
+{% block content %}
+<h1>Delete this task?</h1>
+{# Identifies exactly which task will be removed. #}
+<p>You are about to delete <strong>{{ task.title }}</strong> (ID {{ task.pk }}).</p>
+{# The record is deleted only when this form is submitted with POST. #}
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Delete</button>
+  {# Cancel is a normal link (GET), so nothing is deleted. #}
+  <a href="{% url 'tasks:task_detail' task.pk %}">Cancel</a>
+</form>
+{% endblock %}
